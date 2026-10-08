@@ -1,0 +1,59 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      MONGO_URI: mongodb://mongo:27017/hiring_pipeline
+      JWT_SECRET: ${JWT_SECRET:?Create a .env file next to docker-compose.yml with JWT_SECRET (see README)}
+      JWT_EXPIRES_IN: 1d
+      CLIENT_ORIGIN: http://localhost:8080
+      RECRUITER_INVITE_CODE: ${RECRUITER_INVITE_CODE:?Create a .env file next to docker-compose.yml with RECRUITER_INVITE_CODE (see README)}
+      # shows the password-reset link on screen (demo aid). Keep false if the app is reachable from the internet.
+      SHOW_RESET_LINK: ${SHOW_RESET_LINK:-false}
+      SMTP_HOST: ${SMTP_HOST:?Create SMTP settings in .env for real email verification}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:?Create SMTP settings in .env for real email verification}
+      SMTP_PASS: ${SMTP_PASS:?Create SMTP settings in .env for real email verification}
+      MAIL_FROM: ${MAIL_FROM:?Create MAIL_FROM in .env}
+      EMAIL_VERIFICATION_EXPIRES_MINUTES: ${EMAIL_VERIFICATION_EXPIRES_MINUTES:-15}
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      - uploads_data:/app/uploads
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:5000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    depends_on:
+      mongo:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+
+volumes:
+  mongo_data:
+  uploads_data:

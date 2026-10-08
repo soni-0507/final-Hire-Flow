@@ -1,0 +1,38 @@
+# Render Blueprint: creates the API and the website in one go (free plan).
+services:
+  - type: web
+    name: hireflow-api
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: RECRUITER_INVITE_CODE
+        sync: false
+      - key: SHOW_RESET_LINK
+        value: "false"
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: BREVO_API_KEY
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+  - type: web
+    name: hireflow-web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
