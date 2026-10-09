@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_URL || '/api';
+   const BASE = import.meta.env.PROD ? 'https://hireflow-api-c8k6.onrender.com/api' : (import.meta.env.VITE_API_URL || '/api');
 
 export class ApiError extends Error {
   constructor(message, status, details) {
