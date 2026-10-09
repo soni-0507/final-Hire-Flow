@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap');
+
+/* HireFlow auth pages: everything is scoped under .hfa so nothing else in the app is affected. */
+.hfa {
+  --bg: #f5f4f0; --dot: rgba(20, 20, 30, 0.08);
+  --card: #ffffff; --line: #e7e5e0; --field: #ffffff; --field-line: #d8d6d1;
+  --ink: #17171c; --muted: #6a6a72; --placeholder: #8c8c93; --tabs: #efeee9; --link: #4f46e5;
+  min-height: 100vh; display: grid; grid-template-columns: 1fr;
+  font-family: 'Source Sans 3', Figtree, system-ui, sans-serif; color: var(--ink); background: var(--bg);
+}
+.dark .hfa {
+  --bg: #0b0f1e; --dot: rgba(255, 255, 255, 0.06);
+  --card: #111733; --line: rgba(255, 255, 255, 0.09); --field: #0c1229; --field-line: rgba(255, 255, 255, 0.15);
+  --ink: #f3f4fa; --muted: #9ba2ba; --placeholder: #6f7690; --tabs: #0f1530; --link: #9aa2ff;
+}
+@media (min-width: 1024px) { .hfa { grid-template-columns: 1.1fr 1fr; } }
+
+/* ---------- left: photo panel ---------- */
+.hfa-hero { display: none; position: relative; overflow: hidden; background: #0a0f1f; color: #fff; }
+@media (min-width: 1024px) { .hfa-hero { display: block; } }
+.hfa-hero-bg { position: absolute; inset: 0; background: url('/hireflow-hero-clean.jpg') center bottom / cover no-repeat; }
+.hfa-hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8, 11, 24, 0.3), transparent 72%); }
+.hfa-hero-inner { position: relative; z-index: 1; box-sizing: border-box; min-height: 100vh; display: flex; flex-direction: column; padding: 72px clamp(32px, 6.3vw, 91px) 48px; }
+
+.hfa-brand { display: flex; align-items: center; gap: 14px; }
+.hfa-brand svg { width: 52px; height: 52px; flex: none; }
+.hfa-brand strong { display: block; font-size: 36px; line-height: 1; font-weight: 700; letter-spacing: -0.01em; }
+.hfa-brand strong span { font-weight: 300; }
+.hfa-brand small { display: block; margin-top: 7px; font-size: 14px; color: rgba(255, 255, 255, 0.78); }
+
+.hfa-copy { margin-top: clamp(64px, 11.5vh, 125px); }
+.hfa-copy h2 { margin: 0; font-size: clamp(38px, 3.5vw, 62px); line-height: 1.16; font-weight: 300; letter-spacing: -0.015em; color: #fff; }
+.hfa-copy h2 span, .hfa-copy h2 b { display: block; }
+.hfa-copy h2 b { font-weight: 600; }
+.hfa-copy h2 em { font-style: normal; background: linear-gradient(90deg, #8d9bff, #b49bff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+.hfa-copy p { max-width: 545px; margin: 24px 0 0; font-size: 18px; line-height: 1.5; color: rgba(255, 255, 255, 0.84); }
+
+.hfa-features { list-style: none; margin: 48px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 147px)); }
+.hfa-feature { font-size: 14px; line-height: 18px; color: rgba(255, 255, 255, 0.86); }
+.hfa-feature i { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 10px; border-radius: 12px; background: rgba(14, 20, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); color: #e6e9ff; }
+.hfa-feature:nth-child(2) i { color: #7fb0ff; }
+.hfa-feature i svg { width: 20px; height: 20px; }
+.hfa-feature span { display: block; }
+
+/* ---------- right: form side ---------- */
+.hfa-main {
+  position: relative; display: flex; flex-direction: column; box-sizing: border-box; min-height: 100vh;
+  padding: 26px clamp(20px, 3.9vw, 56px) 32px; background-color: var(--bg);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.3px); background-size: 24px 24px;
+}
+.hfa-topbar { display: flex; align-items: center; justify-content: space-between; }
+@media (min-width: 1024px) { .hfa-topbar { justify-content: flex-end; } .hfa-mobile-brand { display: none; } }
+.hfa-mobile-brand .hfa-brand svg { width: 34px; height: 34px; }
+.hfa-mobile-brand .hfa-brand strong { font-size: 24px; color: var(--ink); }
+.hfa-mobile-brand .hfa-brand small { display: none; }
+.hfa-mode { height: 28px; padding: 0 12px; border: 1px solid var(--field-line); border-radius: 6px; background: var(--card); color: var(--ink); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: transform 0.15s; }
+.hfa-mode:hover { transform: translateY(-1px); }
+
+.hfa-wrap { width: 100%; max-width: 438px; margin: auto; padding: 24px 0; box-sizing: border-box; }
+.hfa-tabs { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border-radius: 10px; background: var(--tabs); }
+.hfa-tabs a { display: grid; place-items: center; height: 38px; border-radius: 8px; font-size: 15px; font-weight: 600; color: var(--muted); text-decoration: none; transition: background 0.2s, color 0.2s; }
+.hfa-tabs a.active { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
+.hfa-head { margin: 34px 0 20px; }
+.hfa-head h1 { margin: 0; font-size: 36px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+.hfa-head p { margin: 8px 0 0; font-size: 15.5px; color: var(--muted); }
+.hfa-card { padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); box-shadow: 0 1px 2px rgba(20, 20, 40, 0.04); }
+.hfa-note { margin: 22px 0 0; text-align: center; font-size: 13px; color: var(--muted); }
+
+/* ---------- form controls inside the card (also used by Signup and the other auth pages) ---------- */
+.hfa .label { display: block; margin-bottom: 6px; font-size: 15px; font-weight: 600; color: var(--ink); }
+.hfa .input { box-sizing: border-box; width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--field-line); border-radius: 6px; background: var(--field); color: var(--ink); font-family: inherit; font-size: 15px; box-shadow: none; }
+.hfa .input::placeholder { color: var(--placeholder); }
+.hfa .input:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18); }
+.hfa .input.pr-16 { padding-right: 64px; }
+.hfa .auth-input-wrap { position: relative; }
+.hfa .auth-input-wrap > svg { position: absolute; left: 13px; top: 20px; transform: translateY(-50%); width: 17px; height: 17px; color: var(--placeholder); pointer-events: none; z-index: 1; }
+.hfa .auth-input-wrap .input { padding-left: 40px; }
+.hfa .auth-input-wrap button { color: var(--ink); font-size: 13px; font-weight: 600; }
+
+.hfa .remember-row { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--muted); cursor: pointer; }
+.hfa .remember-row input { width: 15px; height: 15px; accent-color: #6366f1; }
+.hfa .auth-link { font-size: 13px; font-weight: 600; color: var(--link); text-decoration: none; }
+.hfa .auth-link:hover { text-decoration: underline; }
+
+.hfa .auth-submit { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 43px; padding: 0; border: 0; border-radius: 6px; background: linear-gradient(90deg, #6366f1, #3b82f6); color: #fff; font-family: inherit; font-size: 15px; font-weight: 600; box-shadow: none; cursor: pointer; transition: filter 0.2s, transform 0.1s; }
+.hfa .auth-submit:hover:not(:disabled) { filter: brightness(1.07); }
+.hfa .auth-submit:active:not(:disabled) { transform: translateY(1px); }
+.hfa .auth-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.hfa-demo { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.hfa-demo p { margin: 0 0 10px; font-size: 13px; line-height: 1.4; color: var(--muted); }
+.hfa .demo-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.hfa .demo-btn { height: 28px; padding: 0 11px; border: 1px solid var(--field-line); border-radius: 6px; background: var(--card); color: var(--ink); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; transition: transform 0.15s; }
+.hfa .demo-btn:hover { transform: translateY(-1px); }
+
+/* ---------- gentle entrance ---------- */
+@keyframes hfaUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.hfa-hero-inner > * { animation: hfaUp 0.6s ease both; }
+.hfa-hero-inner > *:nth-child(2) { animation-delay: 0.1s; }
+.hfa-hero-inner > *:nth-child(3) { animation-delay: 0.2s; }
+.hfa-wrap { animation: hfaUp 0.55s ease both; }
+@media (prefers-reduced-motion: reduce) { .hfa *, .hfa { animation: none !important; transition: none !important; } }
+
+/* ---------- extras for Signup / Verify email (use the same variables as above) ---------- */
+.hfa .role-card { display: block; padding: 11px 14px; border: 1px solid var(--field-line); border-radius: 8px; background: var(--field); cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.15s; }
+.hfa .role-card:hover { transform: translateY(-1px); }
+.hfa .role-card.selected { border-color: #6366f1; background: rgba(99, 102, 241, 0.09); }
+.hfa .role-card-title { display: block; font-size: 14px; font-weight: 600; color: var(--ink); }
+.hfa .role-card-text { display: block; margin-top: 3px; font-size: 12px; line-height: 1.4; color: var(--muted); }
+.hfa .signup-trust { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 12px; margin: 18px 0 0; font-size: 12.5px; color: var(--muted); }
+.hfa .signup-trust span { white-space: nowrap; }
+.hfa .signup-trust b { color: var(--link); font-weight: 700; }
+.hfa .verification-code { text-align: center; letter-spacing: 0.45em; font-size: 22px; font-weight: 700; }
+.hfa .verify-icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: rgba(99, 102, 241, 0.12); color: var(--link); font-size: 24px; }
+.hfa .muted { color: var(--muted); }
+
+/* ---------- fit the window: photo stays fixed, only the form side scrolls on short screens ---------- */
+.hfa { height: 100vh; height: 100dvh; overflow: hidden; grid-template-rows: minmax(0, 1fr); }
+.hfa-hero-inner { min-height: 0; height: 100%; overflow: hidden; padding-top: clamp(32px, 6vh, 72px); padding-bottom: 32px; }
+.hfa-main { min-height: 0; height: 100%; overflow-y: auto; padding-top: 18px; padding-bottom: 18px; }
+.hfa-wrap { padding: 8px 0; }
+.hfa-head { margin: clamp(16px, 2.6vh, 28px) 0 14px; }
+.hfa-head h1 { font-size: 32px; }
+.hfa-card { padding: 20px; }
+.hfa form.space-y-4 > * + * { margin-top: 12px !important; }
+.hfa-copy { margin-top: clamp(32px, 8vh, 110px); }
+.hfa-features { margin-top: clamp(24px, 5vh, 48px); }
+@media (max-height: 820px) {
+  .hfa-copy h2 { font-size: clamp(32px, 3vw, 48px); }
+  .hfa-copy p { margin-top: 14px; font-size: 16px; }
+  .hfa .input { height: 38px; }
+  .hfa .label { margin-bottom: 4px; font-size: 14px; }
+  .hfa form.space-y-4 > * + * { margin-top: 9px !important; }
+}
+
+/* ---------- the original HireFlow logo mark (kept exactly as it was) ---------- */
+.hfa .hero-logo { position: relative; display: grid; place-items: center; flex: none; width: 52px; height: 52px; border: 1px solid rgba(125, 150, 255, 0.45); border-radius: 16px; color: #fff; background: linear-gradient(145deg, #6f83ff, #4659d8); box-shadow: 0 0 35px rgba(92, 104, 255, 0.4); transform: rotate(-3deg); }
+.hfa .hero-logo::before, .hfa .hero-logo::after { content: ""; position: absolute; width: 17px; height: 29px; border-radius: 3px; background: linear-gradient(180deg, #a9baff, #6078ee); }
+.hfa .hero-logo::before { left: 9px; transform: skewY(-30deg); }
+.hfa .hero-logo::after { right: 9px; transform: skewY(30deg); }
+.hfa .hero-logo span { position: relative; z-index: 2; font-weight: 900; font-size: 15px; }
+.hfa-mobile-brand .hero-logo { width: 32px; height: 32px; border-radius: 10px; }
+.hfa-mobile-brand .hero-logo::before, .hfa-mobile-brand .hero-logo::after { width: 10px; height: 18px; }
+.hfa-mobile-brand .hero-logo::before { left: 5px; }
+.hfa-mobile-brand .hero-logo::after { right: 5px; }

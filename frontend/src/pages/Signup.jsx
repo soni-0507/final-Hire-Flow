@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/auth.js';
 import { fieldErrors } from '../lib/api.js';
 import { ErrorBanner, Field, Spinner } from '../components/ui.jsx';
@@ -86,13 +86,11 @@ export default function Signup() {
           <PasswordInput autoComplete="new-password" placeholder="Repeat your password" value={form.confirm} onChange={set('confirm')} />
         </Field>
 
-        <button className="btn-primary auth-submit w-full py-3" disabled={loading}>
-          {loading && <Spinner className="h-4 w-4 !text-white" />} Create account <span className="arrow">→</span>
+        <button className="auth-submit" disabled={loading}>
+          {loading && <Spinner className="h-4 w-4 !text-white" />} Create account
         </button>
       </form>
 
-      <div className="signup-trust"><span>✓</span> Real email verification <span>✓</span> Secure password hashing <span>✓</span> Role-based access</div>
-      <p className="auth-bottom">Already registered? <Link to="/login">Log in</Link></p>
     </AuthShell>
   );
 }
